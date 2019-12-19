@@ -24,15 +24,30 @@
   color: white;
 }
 
+.input-section{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card{
+  min-width: 475px;
+}
+
+.type-select-input{
+  width: 100%;
+}
+
+.subtype-select-input{
+  width: 40%;
+}
+
+.equal-typography{
+  width: 20%;
 }
