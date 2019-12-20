@@ -4,51 +4,16 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { withStyles } from '@material-ui/core/styles';
-import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
-
+import { UnitInput, BootstrapInput } from "./UnitInput";
 
 import './App.css';
 
-const BootstrapInput = withStyles(theme => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
-      borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-  },
-}))(InputBase);
+
 
 function App() {
-  const [age,setAge] = React.useState('');
+  const [age, setAge] = React.useState('');
   const handleChange = event => {
     setAge(event.target.value);
   };
@@ -62,7 +27,7 @@ function App() {
               Quantity Measurement
             </Typography>
             <Divider />
-            <div style={{marginTop:"10px"}}>
+            <div style={{ marginTop: "10px" }}>
               <FormControl className="type-select-input">
                 <Select
                   labelId="type-select-label"
@@ -78,33 +43,9 @@ function App() {
               </FormControl>
             </div>
             <div className="input-section">
-            <FormControl className="subtype-select-input">
-                <Select
-                  labelId="input-select-label"
-                  id="input-select"
-                  value={age}
-                  onChange={handleChange}
-                  input={<BootstrapInput />}
-                >
-                  <MenuItem value={1}>Length</MenuItem>
-                  <MenuItem value={2}>Weight</MenuItem>
-                  <MenuItem value={3}>Temperature</MenuItem>
-                </Select>
-              </FormControl>
-              <Typography className="equal-typography" color="textSecondary" gutterBottom> = </Typography>
-              <FormControl className="subtype-select-input">
-                <Select
-                  labelId="output-select-label"
-                  id="output-select"
-                  value={age}
-                  onChange={handleChange}
-                  input={<BootstrapInput />}
-                >
-                  <MenuItem value={1}>Length</MenuItem>
-                  <MenuItem value={2}>Weight</MenuItem>
-                  <MenuItem value={3}>Temperature</MenuItem>
-                </Select>
-              </FormControl>
+              <UnitInput></UnitInput>
+              <Typography variant="h1" className="equal-typography" color="textSecondary" gutterBottom> = </Typography>
+              <UnitInput></UnitInput>
             </div>
           </CardContent>
         </Card>
