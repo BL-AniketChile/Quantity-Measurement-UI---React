@@ -43,34 +43,82 @@ export const BootstrapInput = withStyles(theme => ({
 
 export class UnitInput extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      age:1
+      currentUnitType: props.unitTypes.length === 0 ? "" : props.unitTypes[props.type],
+      unitTypes: props.unitTypes,
+      value:props.value,
+      recivedValue:props.value
     }
-    this.handleChange = this.handleChange.bind(this)
+    console.log(this.state.currentUnitType);
+    
+    // this.handleChange = this.handleChange.bind(this)
+  }
+//   static getDerivedStateFromProps(nextProps, prevState){
+//     console.log("value from next props"+nextProps.value);
+    
+//     if(nextProps.value!==prevState.recivedValue){
+//       return {recivedValue : nextProps.value};
+//    }
+//    else return null;
+//  }
+
+  componentWillReceiveProps(newProps){
+    console.log("new value from props",newProps);
+    
+    if(this.props.value !== newProps.value){
+      this.setState({value:newProps.value,
+        unitTypes:newProps.unitTypes,
+      currentUnitType:newProps.unitTypes.length === 0 ? "" : newProps.unitTypes[newProps.type]
+      })
+    }
+    if(this.props.unitTypes !== newProps.unitTypes){
+      this.setState({
+        unitTypes:newProps.unitTypes,
+      currentUnitType:newProps.unitTypes.length === 0 ? "" : newProps.unitTypes[newProps.type]
+      })
+    }
   }
 
-  handleChange = event =>{
-    console.log(event);
+  handleChange = event => {
+    console.log("event in",event);
     
+    this.props.handleChange(event)
+     this.props.handleValueChange(this.state.value)
+  }
+
+  handleInputValueChange = async  event =>{
+    console.log("in handel value change",event.target.value);
+   await this.setState({
+      value:event.target.value
+    })
+    this.props.handleValueChange(this.state.value)
   }
 
   render() {
+    console.log("selected value"+this.props.value);
+    console.log(" value of"+this.state.value);
+    console.log(this.state.currentUnitType);
     return (
       <div>
-        <TextField id="outlined-basic" variant="outlined" />
+        <TextField id="outlined-basic" variant="outlined" type="number" value={this.state.value}
+        onChange={this.handleInputValueChange}/>
         <FormControl className="subtype-select-input">
           <Select
             labelId="input-select-label"
             id="input-select"
-            value={this.state.age}
-            onChange={this.handleChange}
+            value={this.state.currentUnitType}
+            onChange={event =>this.handleChange(event)}
             input={<BootstrapInput />}
           >
-            <MenuItem value={1}>Length</MenuItem>
-            <MenuItem value={2}>Weight</MenuItem>
-            <MenuItem value={3}>Temperature</MenuItem>
+            {
+              this.state.unitTypes.map(unitType => {
+                return <MenuItem key={this.state.unitTypes.indexOf(unitType)} value={unitType}>
+                  {unitType}
+                </MenuItem>
+              })
+            }
           </Select>
         </FormControl>
       </div>
